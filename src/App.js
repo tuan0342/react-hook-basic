@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Nav from './components/Navigation';
 
 // Code gồm có: template + logic
 // JSX (chính là template)
@@ -20,6 +21,9 @@ function App() {
 
   return (
     <div className="App">
+
+      <Nav/>
+      
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello World!! Learn ReactJS with {name} in {number}</h1>
