@@ -14,11 +14,16 @@ import './App.css';
 
 
 function App() {
+  let name = "Ngô Tuấn";  // string 
+  let number = 2022;
+  let link = "https://www.youtube.com/watch?v=0HzKV6QH5Ik";
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Hello World!!</h1>
+        <h1>Hello World!! Learn ReactJS with {name} in {number}</h1>
+        <a href={link} target="_blank" rel="noreferrer">Visit piano</a>
       </header>
     </div>
   );
