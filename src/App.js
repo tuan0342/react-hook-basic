@@ -14,20 +14,22 @@ import Nav from './components/Navigation';
 // + setupTests.js
 
 
-function App() {
+function App() {  // đây là class
   let name = "Ngô Tuấn";  // string 
-  let number = 2022;
-  let link = "https://www.youtube.com/watch?v=0HzKV6QH5Ik";
+
+  const handleEventClick = (event) => {
+    console.log('>>> click me', event.target.value);
+  }
 
   return (
     <div className="App">
-
       <Nav/>
       
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h1>Hello World!! Learn ReactJS with {name} in {number}</h1>
-        <a href={link} target="_blank" rel="noreferrer">Visit piano</a>
+        <h1>Hello World!! Learn ReactJS with {name}</h1>
+        <input type="text" value="Ngô Tuấn" onClick={(event) => {handleEventClick(event)} }/>
+        <button type="button" onClick={ (event) => {handleEventClick(event)} }>Click me</button>
       </header>
     </div>
   );
