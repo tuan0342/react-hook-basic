@@ -5,13 +5,19 @@ const Todo = (props) => {
     const todos = props.myData;
     return(
         <div className='todo-container'>
+            <div className="title">
+                {props.title}
+            </div>
+
             {/* Dùng map để lặp vì nó tạo array mới (ko ảnh hưởng đến data), thay vì dùng for hay for-each */}
             {todos.map(todo => {
                 return(
-                <li className='todo-child' key={todo.id}>{todo.title}</li> 
-            );
-})}
-</div>
+                    <li className='todo-child' key={todo.id}>{todo.title}</li> 
+                );      
+            })}
+
+            <hr/>
+        </div>
     )
 }
 
