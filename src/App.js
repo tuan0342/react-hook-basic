@@ -32,10 +32,13 @@ function App() {  // đây là class
   ]);
 
   // mỗi 1 lần component update xong , thì nó sẽ chạy vào hàm useEffect
+  // useEffect(() => {
+  //   console.log('run use effect');
+  // });
+
   useEffect(() => {
     console.log('run use effect');
-  });
-
+  }, [nameFromInput]); // khi nào biến 'nameFromInput' thay đổi mới chạy dòng lệnh bên trong 'useEffect'
   
   const handleEventClick = (event) => {
     if (!nameFromInput) return alert('Empty input');  // check biến rỗng
