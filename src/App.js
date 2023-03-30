@@ -8,6 +8,9 @@ import { useState } from 'react';
 // trình biên dịch là babel
 // src={logo}: là biến 
 
+// hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
+// Để merge dùng: '...' spread syntax array (copy dữ liệu cũ)
+
 // function App() {}      <=>      function App = () => {}
 
 // Xóa 1 vài file ko dùng: 
@@ -18,16 +21,25 @@ import { useState } from 'react';
 function App() {  // đây là class
 
   // // mỗi lần gọi vào useState thì sẽ render lại trang
-  let [name, setName] = useState('Ngô Tuấn');  
-  const [address, setAddress] = useState(''); 
+  let [name, setName] = useState('Ngô Tuấn');  // state: "Ngô Tuấn"
+  const [nameFromInput, setnameFromInput] = useState('');  // state: ""
+  const [todos, setTodos] = useState([
+    {id: 'todo1', title: 'Học React cơ bản'},
+    {id: 'todo2', title: 'Làm bài tập về nhà'},
+    {id: 'todo3', title: 'Chơi game'}
+  ]);
 
   const handleEventClick = (event) => {
-    console.log(address);   
-    setName(address);
+    if (!nameFromInput) return alert('Empty input');  // check biến rỗng
+
+    // hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
+    // ... spread syntax array
+    let newTodo = {id: 'abc', title: nameFromInput};
+    setTodos([...todos, newTodo]);
   }
 
   const handleOnChangeInput = (event) => {
-    setAddress(event.target.value);
+    setnameFromInput(event.target.value);
   }
 
   // re-render
@@ -37,7 +49,17 @@ function App() {  // đây là class
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello World!! Learn ReactJS with {name}</h1>
-        <input type="text" value={address} onChange={(event) => handleOnChangeInput(event)}/>
+
+        <div className='todo-container'>
+          {/* Dùng map để lặp vì nó tạo array mới (ko ảnh hưởng đến data), thay vì dùng for hay for-each */}
+          {todos.map(todo => {
+            return(
+              <li className='todo-child' key={todo.id}>{todo.title}</li> 
+            );
+          })}
+
+        </div>
+        <input type="text" value={nameFromInput} onChange={(event) => handleOnChangeInput(event)}/>
         <button type="button" onClick={ (event) => {handleEventClick(event)} }>Click me</button>
       </header>
     </div>
