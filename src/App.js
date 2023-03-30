@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Nav from './components/Navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Todo from './components/Todo';
 
 // Code gồm có: template + logic
@@ -21,7 +21,7 @@ import Todo from './components/Todo';
 
 function App() {  // đây là class
 
-  // // mỗi lần gọi vào useState thì sẽ render lại trang
+  // mỗi lần gọi vào useState thì sẽ render lại trang
   let [name] = useState('Ngô Tuấn');  // state: "Ngô Tuấn"
   const [nameFromInput, setnameFromInput] = useState('');  // state: ""
   const [todos, setTodos] = useState([
@@ -31,6 +31,12 @@ function App() {  // đây là class
     {id: 'todo4', title: 'Đọc sách', type: 'momon'}
   ]);
 
+  // mỗi 1 lần component update xong , thì nó sẽ chạy vào hàm useEffect
+  useEffect(() => {
+    console.log('run use effect');
+  });
+
+  
   const handleEventClick = (event) => {
     if (!nameFromInput) return alert('Empty input');  // check biến rỗng
     // hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
