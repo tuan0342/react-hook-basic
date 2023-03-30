@@ -35,12 +35,22 @@ function App() {  // đây là class
     if (!nameFromInput) return alert('Empty input');  // check biến rỗng
     // hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
     // ... spread syntax array
-    let newTodo = {id: 'abc', title: nameFromInput, type: 'momonga'};
+    let newTodo = {
+      id: Math.floor((Math.random() * 10000) + 1), // random số từ 0-1, rồi nhân 10, xong +1, rồi làm tròn
+      title: nameFromInput, 
+      type: 'momonga'
+    };
     setTodos([...todos, newTodo]);
   }
 
   const handleOnChangeInput = (event) => {
     setnameFromInput(event.target.value);
+  }
+
+  const deleteDataTodo = (id) => {
+    let currentTodos = todos;
+    currentTodos = currentTodos.filter(item  => item.id !== id );
+    setTodos(currentTodos);
   }
 
   // re-render
@@ -54,11 +64,13 @@ function App() {  // đây là class
         <Todo
           myData={todos}
           title={'Danh sách todo'}
+          deleteDataTodo={deleteDataTodo} // truyền function từ cha cho thằng con
         />
 
         <Todo
           myData={todos.filter(item => item.type === 'momonga')}
           title={'Todo của Momonga'}
+          deleteDataTodo={deleteDataTodo} // truyền function từ cha cho thằng con
         />
         <input type="text" value={nameFromInput} onChange={(event) => handleOnChangeInput(event)}/>
         <button type="button" onClick={ (event) => {handleEventClick(event)} }>Click me</button>

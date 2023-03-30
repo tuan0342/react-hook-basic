@@ -2,7 +2,13 @@
 //        -> truyền dữ liệu từ cha xuống con (Todo là con, App là cha)
 
 const Todo = (props) => {
-    const todos = props.myData;
+    const todos = props.myData; // C1 
+    // const {todos, title} = props;  // C2
+
+    const handleDelete = (id) => {
+        props.deleteDataTodo(id);
+    }
+
     return(
         <div className='todo-container'>
             <div className="title">
@@ -12,7 +18,11 @@ const Todo = (props) => {
             {/* Dùng map để lặp vì nó tạo array mới (ko ảnh hưởng đến data), thay vì dùng for hay for-each */}
             {todos.map(todo => {
                 return(
-                    <li className='todo-child' key={todo.id}>{todo.title}</li> 
+                    <div key={todo.id}> 
+                        <li className='todo-child'> {todo.title} 
+                            &nbsp;  &nbsp; <span onClick={() => handleDelete(todo.id)}> x</span> 
+                        </li> 
+                    </div>
                 );      
             })}
 
