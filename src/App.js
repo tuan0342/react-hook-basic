@@ -3,6 +3,7 @@ import './App.css';
 import Nav from './components/Navigation';
 import { useState, useEffect } from 'react';
 import Todo from './components/Todo';
+import Covid from './components/Covid';
 
 // Code gồm có: template + logic
 // JSX (chính là template)
@@ -70,7 +71,9 @@ function App() {  // đây là class
         <Nav/>
         <img src={logo} className="App-logo" alt="logo" />
         <h1>Hello World!! Learn ReactJS with {name}</h1>
-        <Todo
+        <Covid/>
+
+        {/* <Todo
           myData={todos}
           title={'Danh sách todo'}
           deleteDataTodo={deleteDataTodo} // truyền function từ cha cho thằng con
@@ -82,7 +85,7 @@ function App() {  // đây là class
           deleteDataTodo={deleteDataTodo} // truyền function từ cha cho thằng con
         />
         <input type="text" value={nameFromInput} onChange={(event) => handleOnChangeInput(event)}/>
-        <button type="button" onClick={ (event) => {handleEventClick(event)} }>Click me</button>
+        <button type="button" onClick={ (event) => {handleEventClick(event)} }>Click me</button> */}
 
       </header>
     </div>
