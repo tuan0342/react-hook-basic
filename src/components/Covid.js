@@ -5,9 +5,12 @@ import moment from "moment/moment";
 const Covid = () => {
 
     const [dataCovid, setDataCovid] = useState([]);
+    const [loading, setLoading] = useState(true);
     
     useEffect(() => { // tham khảo trên 'https://www.npmjs.com/package/axios'
-        axios.get('https://api.covid19api.com/country/vietnam?from=2021-10-01T00%3A00%3A00Z&to=2021-10-20T00%3A00%3A00Z')
+
+        setTimeout(() => {  // nếu giao diện đã hiển thị nhưng data chưa về thì sẽ hiện chữ loading
+            axios.get('https://api.covid19api.com/country/vietnam?from=2021-10-01T00%3A00%3A00Z&to=2021-10-20T00%3A00%3A00Z')
             .then(function (response) {
                 let data = response && response.data ? response.data : [];
                 if (data && data.length > 0) {
@@ -15,14 +18,18 @@ const Covid = () => {
                         item.Date = moment(item.Date).format('DD/MM/YYYY');  // convert định dạng date
                         return item;
                     })
+                    data = data.reverse();
                 }
                 setDataCovid(data);  // re-render
+                setLoading(false);
             })
             .catch(function (error) {
                 console.log(error);
             })
             .finally(function () {
             });
+        }, 2000) // sau 2s server mới phản hồi
+
     }, [])
 
 
@@ -41,7 +48,7 @@ const Covid = () => {
             </thead>
 
             <tbody>
-                {dataCovid && dataCovid.length > 0 &&
+                { loading === false && dataCovid && dataCovid.length > 0 &&
                     dataCovid.map(item => {
                         return (
                             <tr key={item.ID}>
@@ -54,7 +61,13 @@ const Covid = () => {
                         )
                     })
                 }
-
+                { loading === true && 
+                    <tr> 
+                        <td colSpan='5' style={{'textAlign': 'center'}}> {/* colSpan='5': tạo 1 hàng mới có merger 5 cột */}
+                            Loading...
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
         </>

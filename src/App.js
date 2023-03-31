@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Nav from './components/Navigation';
 import { useState, useEffect } from 'react';
-import Todo from './components/Todo';
+// import Todo from './components/Todo';
 import Covid from './components/Covid';
 
 // Code gồm có: template + logic
@@ -25,12 +25,12 @@ function App() {  // đây là class
   // mỗi lần gọi vào useState thì sẽ render lại trang
   let [name] = useState('Ngô Tuấn');  // state: "Ngô Tuấn"
   const [nameFromInput, setnameFromInput] = useState('');  // state: ""
-  const [todos, setTodos] = useState([
-    {id: 'todo1', title: 'Học React cơ bản', type: 'momonga'},
-    {id: 'todo2', title: 'Làm bài tập về nhà', type: 'momonga'},
-    {id: 'todo3', title: 'Chơi game', type: 'momon'},
-    {id: 'todo4', title: 'Đọc sách', type: 'momon'}
-  ]);
+  // const [todos, setTodos] = useState([
+  //   {id: 'todo1', title: 'Học React cơ bản', type: 'momonga'},
+  //   {id: 'todo2', title: 'Làm bài tập về nhà', type: 'momonga'},
+  //   {id: 'todo3', title: 'Chơi game', type: 'momon'},
+  //   {id: 'todo4', title: 'Đọc sách', type: 'momon'}
+  // ]);
 
   // mỗi 1 lần component update xong , thì nó sẽ chạy vào hàm useEffect
   // useEffect(() => {
@@ -41,27 +41,27 @@ function App() {  // đây là class
     console.log('run use effect');
   }, [nameFromInput]); // khi nào biến 'nameFromInput' thay đổi mới chạy dòng lệnh bên trong 'useEffect'
   
-  const handleEventClick = (event) => {
-    if (!nameFromInput) return alert('Empty input');  // check biến rỗng
-    // hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
-    // ... spread syntax array
-    let newTodo = {
-      id: Math.floor((Math.random() * 10000) + 1), // random số từ 0-1, rồi nhân 10, xong +1, rồi làm tròn
-      title: nameFromInput, 
-      type: 'momonga'
-    };
-    setTodos([...todos, newTodo]);
-  }
+  // const handleEventClick = (event) => {
+  //   if (!nameFromInput) return alert('Empty input');  // check biến rỗng
+  //   // hook not merge state (tức là nó ko hợp nhất state mới và cũ), but class auto merge
+  //   // ... spread syntax array
+  //   let newTodo = {
+  //     id: Math.floor((Math.random() * 10000) + 1), // random số từ 0-1, rồi nhân 10, xong +1, rồi làm tròn
+  //     title: nameFromInput, 
+  //     type: 'momonga'
+  //   };
+  //   setTodos([...todos, newTodo]);
+  // }
 
-  const handleOnChangeInput = (event) => {
-    setnameFromInput(event.target.value);
-  }
+  // const handleOnChangeInput = (event) => {
+  //   setnameFromInput(event.target.value);
+  // }
 
-  const deleteDataTodo = (id) => {
-    let currentTodos = todos;
-    currentTodos = currentTodos.filter(item  => item.id !== id );
-    setTodos(currentTodos);
-  }
+  // const deleteDataTodo = (id) => {
+  //   let currentTodos = todos;
+  //   currentTodos = currentTodos.filter(item  => item.id !== id );
+  //   setTodos(currentTodos);
+  // }
 
   // re-render
   return (
