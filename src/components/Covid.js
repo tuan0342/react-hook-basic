@@ -5,11 +5,13 @@ import moment from "moment/moment";
 const Covid = () => {
 
     const [dataCovid, setDataCovid] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);  // mặc định là ko có lỗi (false)
     
+    // giống với componentDidMount (reactjs class)
     useEffect(() => { // tham khảo trên 'https://www.npmjs.com/package/axios'
 
-        setTimeout(() => {  // nếu giao diện đã hiển thị nhưng data chưa về thì sẽ hiện chữ loading
+        try{
             axios.get('https://api.covid19api.com/country/vietnam?from=2021-10-01T00%3A00%3A00Z&to=2021-10-20T00%3A00%3A00Z')
             .then(function (response) {
                 let data = response && response.data ? response.data : [];
@@ -21,14 +23,20 @@ const Covid = () => {
                     data = data.reverse();
                 }
                 setDataCovid(data);  // re-render
-                setLoading(false);
+                setIsLoading(false); // load xong
+                setIsError(false);  // load xong, ko có lỗi
             })
             .catch(function (error) {
                 console.log(error);
             })
             .finally(function () {
             });
-        }, 2000) // sau 2s server mới phản hồi
+        }
+        catch(e) {
+            setIsError(true);  // có lỗi
+            setIsLoading(false);  // load xong 
+            // alert(e.message);  // VD: request failed with status code 404 (truy cấp ko tồn tại)
+        }
 
     }, [])
 
@@ -48,7 +56,7 @@ const Covid = () => {
             </thead>
 
             <tbody>
-                { loading === false && dataCovid && dataCovid.length > 0 &&
+                { isError === false && isLoading === false && dataCovid && dataCovid.length > 0 &&
                     dataCovid.map(item => {
                         return (
                             <tr key={item.ID}>
@@ -61,10 +69,17 @@ const Covid = () => {
                         )
                     })
                 }
-                { loading === true && 
+                { isLoading === true && 
                     <tr> 
                         <td colSpan='5' style={{'textAlign': 'center'}}> {/* colSpan='5': tạo 1 hàng mới có merger 5 cột */}
-                            Loading...
+                            isLoading...
+                        </td>
+                    </tr>
+                }
+                { isError === true && 
+                    <tr> 
+                        <td colSpan='5' style={{'textAlign': 'center'}}> {/* colSpan='5': tạo 1 hàng mới có merger 5 cột */}
+                            Something wrong...
                         </td>
                     </tr>
                 }
