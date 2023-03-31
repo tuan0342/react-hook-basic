@@ -1,44 +1,9 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import moment from "moment/moment";
+import useFetch from "../customize/fetch";
 
 const Covid = () => {
 
-    const [dataCovid, setDataCovid] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isError, setIsError] = useState(false);  // mặc định là ko có lỗi (false)
-    
-    // giống với componentDidMount (reactjs class)
-    useEffect(() => { // tham khảo trên 'https://www.npmjs.com/package/axios'
-
-        try{
-            axios.get('https://api.covid19api.com/country/vietnam?from=2021-10-01T00%3A00%3A00Z&to=2021-10-20T00%3A00%3A00Z')
-            .then(function (response) {
-                let data = response && response.data ? response.data : [];
-                if (data && data.length > 0) {
-                    data.map(item => {
-                        item.Date = moment(item.Date).format('DD/MM/YYYY');  // convert định dạng date
-                        return item;
-                    })
-                    data = data.reverse();
-                }
-                setDataCovid(data);  // re-render
-                setIsLoading(false); // load xong
-                setIsError(false);  // load xong, ko có lỗi
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-            .finally(function () {
-            });
-        }
-        catch(e) {
-            setIsError(true);  // có lỗi
-            setIsLoading(false);  // load xong 
-            // alert(e.message);  // VD: request failed with status code 404 (truy cấp ko tồn tại)
-        }
-
-    }, [])
+    // Lấy dữ liệu từ hàm useFetch
+    const {data: dataCovid, isLoading, isError} = useFetch('https://api.covid19api.com/country/vietnam?from=2021-10-01T00%3A00%3A00Z&to=2021-10-20T00%3A00%3A00Z');
 
 
     return (
