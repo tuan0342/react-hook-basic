@@ -16,8 +16,8 @@ const Covid = () => {
 
 
     return (
-        <>
-        <h3>Covid 19 tracking in Viet Nam</h3>
+        <div>
+        <h3 style={{margin: '0', padding: '10px 0px'}}>Covid 19 tracking in Viet Nam</h3>
         <table>
             <thead>
                 <tr>
@@ -59,7 +59,7 @@ const Covid = () => {
                 }
             </tbody>
         </table>
-        </>
+        </div>
         
     );
 }
