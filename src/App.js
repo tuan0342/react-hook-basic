@@ -4,6 +4,9 @@ import Nav from './components/Navigation';
 import { useState, useEffect } from 'react';
 // import Todo from './components/Todo';
 import Covid from './components/Covid';
+import {CountDownClass, CountDownHook} from './components/CountDown';
+
+
 
 // Code gồm có: template + logic
 // JSX (chính là template)
@@ -63,14 +66,25 @@ function App() {  // đây là class
   //   setTodos(currentTodos);
   // }
 
+  const onTimesup = () => {
+    alert('times up');
+  }
+
   // re-render
   return (
     <div className="App">
       <header className="App-header">
 
         <Nav/>
+
         <img src={logo} className="App-logo" alt="logo" />
+
+        <CountDownClass onTimesup={onTimesup}/>
+        <span>-----------------------</span>
+        <CountDownHook onTimesup={onTimesup}/>
+
         <h1>Hello World!! Learn ReactJS with {name}</h1>
+
         <Covid/>
 
         {/* <Todo

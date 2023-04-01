@@ -63,7 +63,7 @@ const useFetch = (url) => {
             setIsLoading(false);  // load xong 
             // alert(e.message);  // VD: request failed with status code 404 (truy cấp ko tồn tại)
         }
-    }, []);
+    }, [url]);   // một khi url thay đổi, sẽ fetch lại data
 
     return {data, isLoading, isError};
 }
