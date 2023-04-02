@@ -10,6 +10,13 @@ class CountDownClass extends React.Component {
         count: 10
     }
 
+    // hàm componentWillUnmount được gọi ngay lập tức khi 1 thành phần bị hủy
+    componentWillUnmount() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+
     // hàm componentDidMount được chạy sau khi ta render lần đầu (live cirle đầu tiên của web)
     componentDidMount() {
         /* hàm setTimeout (chạy 1 lần) nhận 2 tham số: function và thời gian nó chạy */

@@ -1,6 +1,7 @@
 // Mục đích của file này là lấy data về
 // Rule: bắt buộc đầu hàm phải có 'use..' 
 
+// Khi có quá nhiều request  (chuyển trang nhiều) cần cancal request
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -17,10 +18,13 @@ const useFetch = (url) => {
 
     // giống với componentDidMount (reactjs class)
     useEffect(() => { 
-        try{
+        const controller = new AbortController(); // <-- B1 để cancel reqest khi chuyển trang
 
-            // Cách 1: tham khảo trên 'https://www.npmjs.com/package/axios'
-            axios.get(url)
+        // Cách 1: tham khảo trên 'https://www.npmjs.com/package/axios'
+        axios
+            .get(url, {
+                signal: controller.signal // <-- B2 để cancel reqest khi chuyển trang
+            })
             .then(function (response) {
                 let data = response && response.data ? response.data : [];
                 if (data && data.length > 0) {
@@ -33,35 +37,23 @@ const useFetch = (url) => {
                 setData(data);  // re-render
                 setIsLoading(false); // load xong
                 setIsError(false);  // load xong, ko có lỗi
+                
             })
             .catch(function (error) {
-                console.log(error);
+                if (axios.isCancel(error)) {  //  canceled
+                    console.log('>> Error request cancel: ',error.message);
+                } else {  // ko cancel thì load thông báo 
+                    setIsError(true);  // có lỗi
+                    setIsLoading(false);  // load xong 
+                    console.log('>> Not error request cancel: ', error);
+                }
             })
             .finally(function () {
-            });
-
-            // Cách 2: 
-            // async function fetchData() {
-            //     let res = await axios.get(url);
-            //     let data = (res && res.data) ? res.data : []; 
-            //     if (data && data.length > 0) {
-            //         data.map(item => {
-            //             item.Date = moment(item.Date).format('DD/MM/YYYY');
-            //             return item;
-            //         })
-            //         data = data.reverse();  // đảo ngược chuỗi
-            //     }
-            //     setData(data);
-            //     setIsLoading(false);
-            //     setIsError(false);
-            // }
-
-            // fetchData();
-        }
-        catch(e) {
-            setIsError(true);  // có lỗi
-            setIsLoading(false);  // load xong 
-            // alert(e.message);  // VD: request failed with status code 404 (truy cấp ko tồn tại)
+            });   
+        
+        // cleanup useEffect
+        return () => {
+            controller.abort()  // <-- B3 để cancel reqest khi chuyển trang
         }
     }, [url]);   // một khi url thay đổi, sẽ fetch lại data
 
