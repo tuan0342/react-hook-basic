@@ -1,14 +1,15 @@
 import './Navigation.scss';
 //import '../components/Navigation.css';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 const Nav = () => {
     return (
         <div className='topnav'>
-            <Link className='active' to="/">Home</Link>
-            <Link to="/timer">Timer App</Link>
-            <Link to="/todo">Todo App</Link>
-            <Link to="/secret">Secret</Link>
+            {/* <NavLink className='active' to="/">Home</NavLink> */}
+            <NavLink className={ ({ isActive }) => isActive ? "active" : "" } to="/" >Home</NavLink>
+            <NavLink to="/timer">Timer App</NavLink>
+            <NavLink to="/todo">Todo App</NavLink>
+            <NavLink to="/secret">Secret</NavLink>
         </div>
     );
 }

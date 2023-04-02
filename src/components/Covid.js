@@ -1,3 +1,4 @@
+// import moment from "moment";
 import useFetch from "../customize/fetch";
 
 const Covid = () => {
@@ -6,6 +7,7 @@ const Covid = () => {
     const today = new Date(new Date().setHours(0,0,0,0)); // lấy ngày hiện tại
     const priorDate = new Date("2023-03-09T00:00:00.000Z");  // ngày 09-03-2023
     priorDate.setDate(priorDate.getDate() - 30);  // ngày 07-02-2023
+    // const today = moment().startOf('day');
     //const priorDate = moment().subtract(30, 'day');  // 30 ngày trước tính từ ngày hôm nay
     
 
